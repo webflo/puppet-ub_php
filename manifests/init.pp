@@ -22,6 +22,16 @@ define ub_php($apc = true, $xdebug = true) {
       php => $version
     }
   }
+
+  file { "/opt/boxen/config/php/${version}/conf.d/00-default.ini":
+    ensure => 'link',
+    target => "/Users/${::boxen_user}/.boxen/config/php/default.ini",
+  }
+
+  file { "/opt/boxen/config/php/${version}/conf.d/10-version.ini":
+    ensure => 'link',
+    target => "/Users/${::boxen_user}/.boxen/config/php/php-${version}.ini",
+  }
 }
 
 class ub_php::fpm::config {
