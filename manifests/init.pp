@@ -1,4 +1,8 @@
-define ub_php($apc = true, $xdebug = true) {
+define ub_php(
+  $apc = true,
+  $xdebug = true,
+  $intl = true
+) {
   $version = $name
   include ub_php::fpm::config
 
@@ -14,6 +18,12 @@ define ub_php($apc = true, $xdebug = true) {
     php::extension::apc { "apc for ${version}":
       php => $version,
       config_template => "people/php/extensions/apc.ini.erb"
+    }
+  }
+
+  if $intl {
+    php::extension::intl { "intl for ${version}":
+      php => $version
     }
   }
 
