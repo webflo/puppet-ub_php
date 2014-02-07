@@ -30,7 +30,8 @@ define ub_php(
 
   if $xdebug {
     php::extension::xdebug { "xdebug for ${version}":
-      php => $version
+      php => $version,
+      version => "2.2.3"
     }
   }
 
