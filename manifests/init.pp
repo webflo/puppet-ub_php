@@ -23,7 +23,8 @@ define ub_php(
 
   if $intl {
     php::extension::intl { "intl for ${version}":
-      php => $version
+      php => $version,
+      version => "3.0.0"
     }
   }
 
