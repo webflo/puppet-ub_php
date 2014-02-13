@@ -1,13 +1,13 @@
 define ub_php(
   $apc = true,
   $xdebug = true,
-  $intl = true
+  $intl = true,
+  $mailcatcher = true,
 ) {
   $version = $name
   include ub_php::fpm::config
 
   php::fpm { "${version}": }
-
 
   apache_php::fastcgi_handler { "${version}":
     php_version => $version,
@@ -32,6 +32,15 @@ define ub_php(
     php::extension::xdebug { "xdebug for ${version}":
       php => $version,
       version => "2.2.3"
+    }
+  }
+
+  if $mailcatcher {
+    include mailcatcher
+    file { "/opt/boxen/config/php/${version}/conf.d/10-mailcatcher.ini":
+      ensure => "file",
+      content => template('ub_php/mailcatcher.ini.erb'),
+      notify  => Service["dev.php-fpm.${version}"]
     }
   }
 

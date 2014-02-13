@@ -1,0 +1,4 @@
+; Mailcatchter configuration
+
+sendmail_path = <%= scope.lookupvar "::mailcatcher::config::catchmail" %> --smtp-ip <%= scope.lookupvar "::mailcatcher::config::smtp_ip" %> --smtp-port <%= scope.lookupvar "::mailcatcher::config::smtp_port" %>
+smtp_port = <%= scope.lookupvar "::mailcatcher::config::smtp_port" %>
