@@ -1,7 +1,8 @@
 define ub_php(
   $apc = true,
-  $xdebug = true,
   $intl = true,
+  $mcrypt = true,
+  $xdebug = true,
   $mailcatcher = true,
 ) {
   $version = $name
@@ -25,6 +26,12 @@ define ub_php(
     php::extension::intl { "intl for ${version}":
       php => $version,
       version => "3.0.0"
+    }
+  }
+
+  if $mcrypt {
+    php::extension::mcrypt { "mcrypt for ${version}":
+      php => $version,
     }
   }
 
