@@ -8,6 +8,7 @@ define ub_php (
 ) {
   $version = $name
   include ub_php::fpm::config
+  include php::composer
 
   apache_php::fastcgi_handler { "${version}":
     php_version => $version,
