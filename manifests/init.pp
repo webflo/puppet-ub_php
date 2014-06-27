@@ -12,7 +12,8 @@ define ub_php (
 
   apache_php::fastcgi_handler { "${version}":
     php_version => $version,
-    idle_timeout => '3600'
+    idle_timeout => '3600',
+    ensure => $ensure
   }
 
   if $ensure == "present" {
