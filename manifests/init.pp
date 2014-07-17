@@ -7,6 +7,7 @@ define ub_php (
   $ensure = present,
 ) {
   $version = $name
+  include ub_php::config
   include ub_php::fpm::config
   include php::composer
 
@@ -57,12 +58,12 @@ define ub_php (
 
     file { "/opt/boxen/config/php/${version}/conf.d/00-default.ini":
       ensure => 'link',
-      target => "/Users/${::boxen_user}/.boxen/config/php/default.ini",
+      target => "${ub_php::config::config_path}/default.ini",
     }
 
     file { "/opt/boxen/config/php/${version}/conf.d/10-version.ini":
       ensure => 'link',
-      target => "/Users/${::boxen_user}/.boxen/config/php/php-${version}.ini",
+      target => "${ub_php::config::config_path}/php-${version}.ini",
     }
   }
   elsif ($ensure == "absent") {
@@ -79,7 +80,13 @@ class ub_php::fpm::config {
 
   class { 'php::fpm::config':
     pm => 'static',
-    pm_max_children => '5',
+    pm_max_children => '3',
     request_terminate_timeout => 0
   }
+}
+
+class ub_php::config(
+  $config_path = "/Users/${::boxen_user}/.boxen/config/php"
+) {
+
 }
